@@ -56,5 +56,13 @@ public class Task{
         sid=0; 
     }
 
+    public Task(int id,String name,String desk,int sid,int uid){
+        this.id=id;
+        this.name=name;  
+        this.desc=desk; 
+        executor=uid;
+        this.sid=sid; 
+    }
+
     public Task(){status="NEW"; executor=null;sid=0;}
 }

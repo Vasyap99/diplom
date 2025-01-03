@@ -1,0 +1,37 @@
+create database diplom with owner=postgres encoding='UTF8';
+
+\c diplom;
+
+create table public.tasks(
+     id int primary key,
+     name varchar,
+     descr varchar,
+     status varchar,
+     uid int
+);
+
+create sequence public.task_id_seq;
+
+create table public.siteuser(
+     id int primary key,
+     name varchar,
+     pass varchar,
+     role varchar
+);
+
+create sequence public.user_id_seq;
+
+
+
+create table public.statuses(
+     id int primary key,
+     name varchar
+);
+
+create sequence public.status_id_seq;
+
+insert into statuses(id,name) values(0,'NEW');
+insert into statuses(id,name) values(1,'WORK');
+insert into statuses(id,name) values(2,'FINISHED');
+
+alter table tasks add column sid int;

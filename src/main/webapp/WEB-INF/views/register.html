@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <title>Регистрация</title>
+    <meta charset="utf-8">
+	<style type="text/css">
+        body{
+           align:center; 
+        }
+        .myform_b{
+			width:170px;
+            max-width:300px;
+			background: #dddddd; /* Цвет фона */
+			border: 1px solid black;
+            border-radius: 3px; 
+			padding: 30px;
+
+		    font-family: Arial, Helvetica, Verdana, sans-serif; /* Гарнитура шрифта */ 
+    		font-size: 14px; /* Размер текста */ 
+		    font-weight: lighter; /* Светлое начертание */ 
+    		color: #444444; /* Цвет текста */
+
+			display: inline-block;
+			text-align: center;
+		}		
+	</style>
+</head>
+<body>
+
+<form th:method="POST" th:action="@{/register}" th:object="${u}" class="myform_b">
+    <input type="text" th:field="${u.name}" id="name"/>
+	<br/>
+    <input type="password" th:field="${u.pass}" id="pass"/>
+    <br/>
+    <input type="checkbox" onclick="onclick1(this);"> Я даю согласие на обработку персональных данных<br/>
+    <input type="submit" value="sign up" id="btn" class="myform_b"/>
+</form>
+
+</body>
+</html>

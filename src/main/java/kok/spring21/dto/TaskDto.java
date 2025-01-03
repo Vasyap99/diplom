@@ -4,6 +4,7 @@ import lombok.*;
 
 @Getter
 @Setter
+@EqualsAndHashCode
 public class TaskDto{
 
     private int id;

@@ -15,6 +15,7 @@ import lombok.*;
 @Entity
 @Getter
 @Setter
+@EqualsAndHashCode
 @Table(name="tasks")
 public class Task{
 

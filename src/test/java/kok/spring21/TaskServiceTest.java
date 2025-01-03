@@ -17,6 +17,10 @@ import kok.spring21.util.ResponseException;
 
 
 
+import kok.spring21.TaskService;
+import kok.spring21.repo.TaskRepository;
+
+
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -26,10 +30,17 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.AfterAll;
 
-
+import org.mockito.Mockito;
 
 @Service
 public class TaskServiceTest {
+    private static TaskService ts;
+    @BeforeAll
+    static void beforeAll(){
+        ts=new TaskService();
+        TaskRepository tr1 = Mockito.mock(TaskRepository.class);
+        ts.tr=tr1;
+    }
     @Test
     public void setStatus(){
         System.out.println(">>TEST");

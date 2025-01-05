@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 
 import javax.persistence.SequenceGenerator;
 
+import java.time.LocalDateTime;
+
 import lombok.*;
 
 @Entity
@@ -38,7 +40,10 @@ public class Task{
     private Integer executor;  
 
     @Column(name="sid",nullable=false)
-    private Integer sid;  
+    private Integer sid; 
+
+    @Column(name = "deadline", columnDefinition = "TIMESTAMP")
+    private LocalDateTime deadline; 
 
     public Task(String name){
         this.id=id;

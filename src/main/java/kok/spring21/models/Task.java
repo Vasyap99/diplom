@@ -14,6 +14,9 @@ import java.time.LocalDateTime;
 
 import lombok.*;
 
+/**
+* Класс сущности задачи
+*/
 @Entity
 @EqualsAndHashCode
 @Table(name="tasks")

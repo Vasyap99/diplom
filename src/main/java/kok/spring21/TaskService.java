@@ -16,6 +16,9 @@ import org.springframework.security.authentication.BadCredentialsException;
 import kok.spring21.util.ResponseException;
 import java.time.LocalDateTime;
 
+/**
+* Класс Сервиса для реализации работы с задачами
+*/
 @Service
 public class TaskService {
     @Autowired

@@ -4,6 +4,9 @@ import lombok.*;
 
 //import java.time.LocalDateTime;
 
+/**
+* Класс DTO задачи
+*/
 @Getter
 @Setter
 @EqualsAndHashCode

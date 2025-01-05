@@ -14,6 +14,9 @@ import org.springframework.transaction.annotation.*;
 import org.springframework.beans.factory.annotation.*;
 import org.hibernate.*;
 
+/**
+* Класс репозитория задач
+*/
 @Component
 public class TaskRepository{
     private static int N; 

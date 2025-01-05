@@ -32,7 +32,9 @@ import kok.spring21.util.ResponseException;
 
 import java.time.LocalDateTime;
 
-
+/**
+* Класс Рест Контроллера для реализации API для работы с задачами
+*/
 @RestController
 @RequestMapping("/api/tasks")
 public class TaskRestController {

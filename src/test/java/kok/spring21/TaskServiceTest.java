@@ -106,7 +106,7 @@ public class TaskServiceTest {
     public void showStatus(){
         System.out.println(">>TEST showStatus()");
         List<TaskDto> l1=ts.showStatus(0);
-        List<TaskDto> l2=Arrays.stream(tasks).peek(e->System.out.println(e.getSid())).filter(e->e.getSid()==0).map( t -> new TaskDto(t.getId(),t.getName(),t.getDesc(),t.getSid(),t.getExecutor()) ).collect(Collectors.toList()) ;
+        List<TaskDto> l2=Arrays.stream(tasks).peek(e->System.out.println(e.getSid())).filter(e->e.getSid()==0).map( t -> new TaskDto(t.getId(),t.getName(),t.getDesc(),t.getSid(),t.getExecutor(),t.getDeadline()) ).collect(Collectors.toList()) ;
         l1.stream().forEach(e->System.out.println(e.getId()));
         l2.stream().forEach(e->System.out.println(e.getId()));
         assertEquals(true,l1.equals(l2));
@@ -115,7 +115,7 @@ public class TaskServiceTest {
     public void showExecutor(){
         System.out.println(">>TEST showExecutor()");
         List<TaskDto> l1=ts.showExecutor(0);
-        List<TaskDto> l2=Arrays.stream(tasks).peek(e->System.out.println(e.getExecutor())).filter(e->e.getExecutor()==0).map( t -> new TaskDto(t.getId(),t.getName(),t.getDesc(),t.getSid(),t.getExecutor()) ).collect(Collectors.toList()) ;
+        List<TaskDto> l2=Arrays.stream(tasks).peek(e->System.out.println(e.getExecutor())).filter(e->e.getExecutor()==0).map( t -> new TaskDto(t.getId(),t.getName(),t.getDesc(),t.getSid(),t.getExecutor(),t.getDeadline()) ).collect(Collectors.toList()) ;
         l1.stream().forEach(e->System.out.println(e.getId()));
         l2.stream().forEach(e->System.out.println(e.getId()));
         assertEquals(true,l1.equals(l2));

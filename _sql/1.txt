@@ -35,3 +35,12 @@ insert into statuses(id,name) values(1,'WORK');
 insert into statuses(id,name) values(2,'FINISHED');
 
 alter table tasks add column sid int;
+
+--deadline:
+alter table tasks add column deadline TIMESTAMP WITHOUT TIME ZONE;
+
+update tasks set deadline='2025-01-10 11:30:30' where id=3;
+
+update tasks set deadline='2025-01-15 12:00:30' where id=4;
+
+update tasks set deadline='2025-01-08 11:05:00' where id=5;

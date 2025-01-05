@@ -30,6 +30,8 @@ import org.springframework.http.HttpStatus;
 
 import kok.spring21.util.ResponseException;
 
+import java.time.LocalDateTime;
+
 
 @RestController
 @RequestMapping("/api/tasks")
@@ -60,6 +62,11 @@ public class TaskRestController {
     @GetMapping("/showExecutor")
     public ResponseEntity<List<TaskDto>> showExecutor(@RequestParam("uid") int uid) throws Exception {
         List<TaskDto> td=rs.showExecutor(uid);
+        return ResponseEntity.ok(td);
+    }
+    @GetMapping("/showDeadline")
+    public ResponseEntity<List<TaskDto>> showDeadline(@RequestParam("dt") String dt) throws Exception {
+        List<TaskDto> td=rs.showDeadline(dt);
         return ResponseEntity.ok(td);
     }
 

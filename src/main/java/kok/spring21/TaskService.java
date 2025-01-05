@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 import org.springframework.security.authentication.BadCredentialsException;
 
 import kok.spring21.util.ResponseException;
-
+import java.time.LocalDateTime;
 
 @Service
 public class TaskService {
@@ -40,12 +40,18 @@ public class TaskService {
     public List<TaskDto> showStatus(int sid){
         List<Task> tl=tr.show_status(sid);
         if(tl==null) throw new ResponseException();  
-        return tl.stream().map( t -> new TaskDto(t.getId(),t.getName(),t.getDesc(),t.getSid(),t.getExecutor()) ).collect(Collectors.toList());
+        return tl.stream().map( t -> new TaskDto(t.getId(),t.getName(),t.getDesc(),t.getSid(),t.getExecutor(),t.getDeadline()) ).collect(Collectors.toList());
     }
     @Transactional
     public List<TaskDto> showExecutor(int uid){
         List<Task> tl=tr.show_user(uid);
         if(tl==null) throw new ResponseException(); //return null;   
-        return tl.stream().map( t -> new TaskDto(t.getId(),t.getName(),t.getDesc(),t.getSid(),t.getExecutor()) ).collect(Collectors.toList());
+        return tl.stream().map( t -> new TaskDto(t.getId(),t.getName(),t.getDesc(),t.getSid(),t.getExecutor(),t.getDeadline()) ).collect(Collectors.toList());
+    }
+    @Transactional
+    public List<TaskDto> showDeadline(String dt){
+        List<Task> tl=tr.index();
+        if(tl==null) throw new ResponseException(); //return null;   
+        return tl.stream().filter( t -> t.getDeadline().equals(dt) ).map( t -> new TaskDto(t.getId(),t.getName(),t.getDesc(),t.getSid(),t.getExecutor(),t.getDeadline()) ).collect(Collectors.toList());
     }
 }

@@ -15,8 +15,6 @@ import java.time.LocalDateTime;
 import lombok.*;
 
 @Entity
-@Getter
-@Setter
 @EqualsAndHashCode
 @Table(name="tasks")
 public class Task{
@@ -25,25 +23,46 @@ public class Task{
     @Column(name="id",nullable=false)
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="sgt")
     @SequenceGenerator(name="sgt",sequenceName="task_id_seq",allocationSize=1)
+    @Getter
+    @Setter
     private int id;   //IDENTITY  AUTO
 
+    @Getter
+    @Setter
     @Column(name="name")
     private String name;
 
+    @Getter
+    @Setter
     @Column(name="descr")
     private String desc;
 
+    @Getter
+    @Setter
     @Column(name="status")
     private String status; //NEW WORK FIN
 
+    @Getter
+    @Setter
     @Column(name="uid",nullable=true)
     private Integer executor;  
 
+    @Getter
+    @Setter
     @Column(name="sid",nullable=false)
     private Integer sid; 
 
     @Column(name = "deadline", columnDefinition = "TIMESTAMP")
     private LocalDateTime deadline; 
+
+    public void setDeadline(String dt){
+        deadline=LocalDateTime.parse(dt);
+    }
+
+    public String getDeadline(){
+        if(deadline==null) return null;
+        else return deadline.toString();
+    }
 
     public Task(String name){
         this.id=id;

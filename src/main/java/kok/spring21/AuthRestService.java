@@ -1,7 +1,5 @@
-package kok.spring21.controllers;
+package kok.spring21;
 
-
-import kok.spring21.RegisterService;
 import kok.spring21.repo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,24 +31,16 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 
-import kok.spring21.AuthRestService;
+import org.springframework.stereotype.Service;
 
-
-@RestController
-@RequestMapping("/api")
-public class AuthRestController {
+@Service
+public class AuthRestService {
 
     @Autowired
     private AuthenticationManager authenticationManager;
 
     @Autowired
     private AccountUserDetailsService userDetailsService;
-
-    @Autowired
-    private RegisterService rs;
-
-    @Autowired
-    private AuthRestService as;
 
     //@Autowired
     //private PasswordEncoder passwordEncoder;
@@ -61,26 +51,34 @@ public class AuthRestController {
     @Autowired
     private TokenRepository tr;
 
-    @GetMapping("/register")
-    public String registerUser(@RequestParam("name") String name, @RequestParam("pass") String pass) {
-        // Encode the user's password
-        ///user.setPassword(user.getPass());
-        // Save the user to the database
-        System.out.println(">>a-r-0"); 
-        rs.saveUser(new UserDto(name,pass,"ROLE_USER"));
-        System.out.println(">>a-r-1"); 
-        return "User registered successfully";
+    public String loginUser(String name, String pass) throws Exception {
+        final UserDetails userDetails = userDetailsService.loadUserByUsername(name);
+        if( ((AccountUserDetails)userDetails).userIsNull()) 
+            return null;
+
+        try{
+            authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(name, pass)
+            );
+        }catch(Exception e){
+            return null;
+        }
+
+        final String jwt = jwtUtil.generateToken(userDetails);
+
+        tr.save(jwt);
+        System.out.println(">>login1:jwt<"+jwt+"> "+jwt.length());
+
+        return jwt;
     }
 
-    @GetMapping("/login")
-    public ResponseEntity<String> loginUser(@RequestParam("name") String name, @RequestParam("pass") String pass) throws Exception {
-        String jwt=as.loginUser(name,pass);
-        if(jwt==null) return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        else return ResponseEntity.ok(jwt);
-    }
-
-    @GetMapping("/logout")
     public void logoutUser(HttpServletRequest r) throws Exception {
-        as.logoutUser(r);
+        String authorizationHeader = r.getHeader("Authorization");
+        String jwt = null;
+
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            jwt = authorizationHeader.substring(7);
+            tr.delete(jwt);
+        }
     }
 }

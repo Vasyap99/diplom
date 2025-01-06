@@ -22,6 +22,9 @@ import lombok.*;
 @Table(name="tasks")
 public class Task{
 
+    /**
+     * Идентификатор задачи
+     */
     @Id
     @Column(name="id",nullable=false)
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="sgt")
@@ -30,31 +33,47 @@ public class Task{
     @Setter
     private int id;   //IDENTITY  AUTO
 
+    /**
+     * Имя задачи
+     */
     @Getter
     @Setter
     @Column(name="name")
     private String name;
 
+    /**
+     * Описание задачи
+     */
     @Getter
     @Setter
     @Column(name="descr")
     private String desc;
+
 
     @Getter
     @Setter
     @Column(name="status")
     private String status; //NEW WORK FIN
 
+    /**
+     * Идентификатор исполнителя задачи
+     */
     @Getter
     @Setter
     @Column(name="uid",nullable=true)
     private Integer executor;  
 
+    /**
+     * Идентификатор статуса задачи
+     */
     @Getter
     @Setter
     @Column(name="sid",nullable=false)
     private Integer sid; 
 
+    /**
+     * Дедлайн в виде строки в формате: '2025-01-10 11:30:30'
+     */
     @Column(name = "deadline", columnDefinition = "TIMESTAMP")
     private LocalDateTime deadline; 
 

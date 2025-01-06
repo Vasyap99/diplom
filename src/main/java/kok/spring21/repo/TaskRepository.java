@@ -19,13 +19,13 @@ import org.hibernate.*;
 */
 @Component
 public class TaskRepository{
-    private static int N; 
-    public int getN(){return N;}
-
-
     @Autowired
     public SessionFactory sessionFactory;
 
+    /**
+    * Получить список задач
+    * @return список задач
+    */
     public List<Task> index(){
 	Session session = sessionFactory.getCurrentSession();
 
@@ -33,6 +33,11 @@ public class TaskRepository{
         return tasks; 
     }
 
+    /**
+    * Получить список задач, назначенных пользователю
+    * @param uid идентификатор исполнителя
+    * @return список задач или null, если нет такого исполнителя
+    */
     public List<Task> show_user(int uid){
         Session session = sessionFactory.getCurrentSession();
         if(session.createQuery("from User where i="+uid,User.class).list().size()==0)
@@ -40,6 +45,11 @@ public class TaskRepository{
         return session.createQuery("from Task where uid="+uid,Task.class) .getResultList();
     }
 
+    /**
+    * Получить список задач, имеющих указанный статус
+    * @param sid идентификатор статуса
+    * @return список задач или null, если нет такого статуса
+    */
     public List<Task> show_status(int sid){
         Session session = sessionFactory.getCurrentSession();
         if(session.createQuery("from Status where i="+sid,Status.class).list().size()==0)
@@ -47,11 +57,18 @@ public class TaskRepository{
         return session.createQuery("from Task where sid="+sid,Task.class) .getResultList();
     }
 
+    /**
+    * Сохранить новую задачу
+    */
     public void save(Task task){
         Session session = sessionFactory.getCurrentSession();
         session.save(task);
     }
 
+    /**
+    * Обновить задачу
+    * @param id идентификатор задачи
+    */
     public void update(Task task,int id){
         Session session = sessionFactory.getCurrentSession();
        
@@ -62,6 +79,12 @@ public class TaskRepository{
         t.setStatus(task.getStatus());
     }
 
+    /**
+    * Установить статус задачи
+    * @param tid идентификатор задачи
+    * @param sid идентификатор статуса
+    * @return статус установлен успешно (логическое значение)
+    */
     public boolean setTaskStatus(int tid,int sid){
         Session session = sessionFactory.getCurrentSession();
         if(session.createQuery("from Status where i="+sid,Status.class).list().size()==0)
@@ -72,6 +95,12 @@ public class TaskRepository{
         return true; 
     }
 
+    /**
+    * Установить исполнителя задачи
+    * @param tid идентификатор задачи
+    * @param uid идентификатор исполнителя
+    * @return исполнитель назначен успешно (логическое значение)
+    */
     public boolean setExecutor(int tid,int uid){      
         Session session = sessionFactory.getCurrentSession();
         if(session.createQuery("from User where i="+uid,User.class).list().size()==0)
@@ -82,12 +111,20 @@ public class TaskRepository{
         return true; 
     }
 
+    /**
+    * Получить задачу по идентификатору
+    * @param id идентификатор задачи
+    */
     public Task get(int id){
         Session session=sessionFactory.getCurrentSession();
         Task t=session.get(Task.class,id);
         return t; 
     }
 
+    /**
+    * Удалить задачу по идентификатору
+    * @param id идентификатор задачи
+    */
     public void delete(int id){
         Session session = sessionFactory.getCurrentSession();
         Task task=get(id);

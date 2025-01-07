@@ -33,6 +33,9 @@ import org.springframework.http.HttpStatus;
 
 import org.springframework.stereotype.Service;
 
+/**
+* Класс Сервиса для аутентификации через API
+*/
 @Service
 public class AuthRestService {
 
@@ -51,6 +54,12 @@ public class AuthRestService {
     @Autowired
     private TokenRepository tr;
 
+    /**
+     * Метод авторизации
+     * @param name имя пользователя
+     * @param pass пароль
+     * @return jwt токен при успешной авторизации либо null в случае ошибки
+     */
     public String loginUser(String name, String pass) throws Exception {
         final UserDetails userDetails = userDetailsService.loadUserByUsername(name);
         if( ((AccountUserDetails)userDetails).userIsNull()) 
@@ -72,6 +81,9 @@ public class AuthRestService {
         return jwt;
     }
 
+    /**
+     * Метод разлогинивания по переданному токену
+     */
     public void logoutUser(HttpServletRequest r) throws Exception {
         String authorizationHeader = r.getHeader("Authorization");
         String jwt = null;

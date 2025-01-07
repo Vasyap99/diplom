@@ -13,10 +13,16 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.security.authentication.BadCredentialsException;
 
 
+/**
+* Класс Сервиса для регистрации пользователя
+*/
 @Service
 public class RegisterService {
     @Autowired
     UserRepository ur;
+    /**
+     * Регистрация нового пользователя
+     */
     @Transactional
     public void saveUser(UserDto u){   System.out.println(">>su-B");
         if(ur.findByName(u.getName()).isPresent()) throw new BadCredentialsException("user exists!");

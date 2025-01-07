@@ -35,7 +35,9 @@ import org.springframework.http.HttpStatus;
 
 import kok.spring21.AuthRestService;
 
-
+/**
+* Класс Контроллера для регистрации и аутентификации через API
+*/
 @RestController
 @RequestMapping("/api")
 public class AuthRestController {
@@ -61,6 +63,11 @@ public class AuthRestController {
     @Autowired
     private TokenRepository tr;
 
+    /**
+     * Метод регистрации
+     * @param name имя пользователя
+     * @param pass пароль
+     */
     @GetMapping("/register")
     public String registerUser(@RequestParam("name") String name, @RequestParam("pass") String pass) {
         // Encode the user's password
@@ -72,6 +79,12 @@ public class AuthRestController {
         return "User registered successfully";
     }
 
+    /**
+     * Метод авторизации
+     * @param name имя пользователя
+     * @param pass пароль
+     * @return http ответ с jwt токеном
+     */
     @GetMapping("/login")
     public ResponseEntity<String> loginUser(@RequestParam("name") String name, @RequestParam("pass") String pass) throws Exception {
         String jwt=as.loginUser(name,pass);
@@ -79,6 +92,9 @@ public class AuthRestController {
         else return ResponseEntity.ok(jwt);
     }
 
+    /**
+     * Метод разлогинивания по переданному токену
+     */
     @GetMapping("/logout")
     public void logoutUser(HttpServletRequest r) throws Exception {
         as.logoutUser(r);

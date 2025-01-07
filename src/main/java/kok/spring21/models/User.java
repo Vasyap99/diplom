@@ -3,6 +3,9 @@ package kok.spring21.models;
 import javax.persistence.*;
 import lombok.*;
 
+/**
+* Класс сущности пользователя
+*/
 @Entity
 @Table(name="siteuser")
 @Data

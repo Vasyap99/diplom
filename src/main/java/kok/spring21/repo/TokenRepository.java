@@ -15,12 +15,18 @@ import org.springframework.beans.factory.annotation.*;
 import org.springframework.context.annotation.Scope;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 
-
+/**
+* Класс репозитория токенов
+*/
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 @Component
 public class TokenRepository{
     private static List<String> l=new ArrayList<String>(); 
 
+    /**
+    * Найти указанное значение токена
+    * @return логическое значение, токен найден
+    */
     public boolean find(String token){     System.out.println(">>tr:find");
         try{
             System.out.println("tr:find"+l.size());
@@ -31,12 +37,18 @@ public class TokenRepository{
         return l.contains(token);
     }
 
+    /**
+    * Сохранить значение токена в репозитории
+    */
     public void save(String token){     System.out.println(">>tr:save");
         if(!l.contains(token)) {	     System.out.println(">>tr:save-ok");
             l.add(token);			    System.out.println(this); l.stream().forEach(System.out::println);            
         } 
     }
 
+    /**
+    * Удалить значение токена из репозитория
+    */
     public void delete(String token){     System.out.println(">>tr:del");
         l.remove(token);
     }

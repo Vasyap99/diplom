@@ -12,18 +12,26 @@ import org.springframework.beans.factory.annotation.*;
 
 import org.springframework.transaction.annotation.*;
 
+/**
+* Класс репозитория пользователей
+*/
 @Component
 public class UserRepository{
     @Autowired
     public SessionFactory sessionFactory;
 
-
+    /**
+    * Найти пользователя по имени
+    */
     @Transactional
     public Optional<User> findByName(String name){
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("from User where name='"+name+"'",User.class) .getResultList().stream().findFirst();
     }
 
+    /**
+    * Сохранить пользователя
+    */
     public void save(User user){
         Session session = sessionFactory.getCurrentSession();
 

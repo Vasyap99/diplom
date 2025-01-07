@@ -3,6 +3,9 @@ package kok.spring21.models;
 import javax.persistence.*;
 import lombok.*;
 
+/**
+* Класс сущности статуса задачи
+*/
 @Entity
 @Table(name="statuses")
 @Data

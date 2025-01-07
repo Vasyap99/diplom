@@ -12,6 +12,9 @@ import org.springframework.beans.factory.annotation.*;
 
 import org.springframework.transaction.annotation.*;
 
+/**
+* Класс репозитория статусов задач
+*/
 @Component
 public class StatusRepository{
     @Autowired

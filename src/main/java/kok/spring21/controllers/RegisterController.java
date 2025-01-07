@@ -15,7 +15,9 @@ import java.util.Optional;
 
 import kok.spring21.dto.UserDto;
 
-
+/**
+* Класс Контроллера регистрации для веб интерфейса
+*/
 @Controller
 public class RegisterController {
 
@@ -24,10 +26,17 @@ public class RegisterController {
 
     @Autowired
     UserRepository ur;
+
+    /**
+     * Метод, выдающий форму для регистрации
+     */
     @GetMapping("/register")
     public String register1(@ModelAttribute("u") UserDto u){
         return "register";
     }
+    /**
+     * Метод, принимающий данные, полученные из формы для регистрации
+     */
     @PostMapping("/register")
     public String register2(@ModelAttribute("u") UserDto u){
         rs.saveUser(u);

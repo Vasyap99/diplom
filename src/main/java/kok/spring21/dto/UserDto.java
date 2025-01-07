@@ -2,6 +2,9 @@ package kok.spring21.dto;
 
 import lombok.*;
 
+/**
+* Класс DTO пользователя
+*/
 @Getter
 @Setter
 public class UserDto {

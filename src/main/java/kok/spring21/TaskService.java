@@ -16,6 +16,12 @@ import org.springframework.security.authentication.BadCredentialsException;
 import kok.spring21.util.ResponseException;
 import java.time.LocalDateTime;
 
+//RabbitMQ:
+import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.ConnectionFactory;
+import java.nio.charset.StandardCharsets;
+
 /**
 * Класс Сервиса для реализации работы с задачами
 */
@@ -39,9 +45,7 @@ public class TaskService {
      */
     @Transactional
     public boolean setStatus(int tid,int sid){  System.out.println(">>sts-B");
-        return tr.setTaskStatus(tid,sid);
-        
-				                   //System.out.println(">>sts-E");
+        return tr.setTaskStatus(tid,sid);  
     }
     /**
      * Установить исполнителя задачи
@@ -51,8 +55,24 @@ public class TaskService {
      */
     @Transactional
     public boolean setExecutor(int tid,int uid){      System.out.println(">>sts-B");
-        return tr.setExecutor(tid,uid);
-				                   //System.out.println(">>sts-E");
+        boolean res=tr.setExecutor(tid,uid);
+        //RabbitMQ send:
+        if(res)
+	try{			                   //System.out.println(">>sts-E");
+            String QUEUE="TASK_USER_QUEUE_"+uid;
+            ConnectionFactory factory = new ConnectionFactory();
+            factory.setHost("localhost");
+            try (Connection connection = factory.newConnection();
+                Channel channel = connection.createChannel()) {
+                channel.queueDeclare(QUEUE, false, false, false, null);
+                String message = "Вам назначена новая задача в системе управления задачами!";
+                channel.basicPublish("", QUEUE, null, message.getBytes(StandardCharsets.UTF_8));
+                System.out.println(" [x] Sent '" + message + "'");
+            }
+        }catch(Exception e){
+            System.out.println(">>RabbitMQ error!!!");
+        }
+        return res;				                   //System.out.println(">>sts-E");
     }
     /**
      * Получить список задач по статусу

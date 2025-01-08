@@ -31,10 +31,13 @@ import javax.sql.DataSource;
 
 import java.util.Properties;
 
+import org.springframework.scheduling.annotation.EnableScheduling;
+
 //настройка template engine для сервлета:
 @Configuration
 @ComponentScan("kok.spring21")           //skanirovanie proishodit takzhe vo vlozhennyh papkah rekursivno
 @EnableWebMvc
+@EnableScheduling
 public class SpringConfig implements WebMvcConfigurer{
 
 	private final Environment env;

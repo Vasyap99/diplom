@@ -15,6 +15,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 
 import kok.spring21.util.ResponseException;
 import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 //RabbitMQ:
 import com.rabbitmq.client.Channel;
@@ -103,5 +104,39 @@ public class TaskService {
         List<Task> tl=tr.index();
         if(tl==null) throw new ResponseException(); //return null;   
         return tl.stream().filter( t -> t.getDeadline().equals(dt) ).map( t -> new TaskDto(t.getId(),t.getName(),t.getDesc(),t.getSid(),t.getExecutor(),t.getDeadline()) ).collect(Collectors.toList());
+    }
+    /**
+     * Получить список задач за сутки до дедлайна
+     */
+    @Transactional
+    public synchronized List<TaskDto> showDayBeforeDeadline(){
+        List<Task> tl=tr.index();
+        System.out.println(">>>>showDayBeforeDeadline()1:"+tl.size());
+        if(tl==null) throw new ResponseException(); //return null;   
+        System.out.println(">>>>showDayBeforeDeadline()1-3:");
+        List<TaskDto> ld=
+          tl.stream()
+          /*.peek( t-> {
+              System.out.println(">>>>showDayBeforeDeadline()2-0:"+(t!=null));
+              String s=t.getDeadline();//.substring(0,10);
+              System.out.println(">>>>showDayBeforeDeadline()2-1:"+s);
+              int n;
+              if(s!=null)
+                  n=LocalDate.parse(t.getDeadline().substring(0,10)).compareTo(LocalDate.now());
+              else n=0;
+              System.out.println(">>>>showDayBeforeDeadline()3:"+n); 
+          })*/
+          .filter( t -> t.getSid()!=2 )  //task not FINISHED
+          .filter( t -> {
+              if(t.getDeadline()!=null)
+                  return LocalDate.parse(t.getDeadline().substring(0,10)).compareTo(LocalDate.now())==1;
+              else return false;
+          })
+          .map( t -> t!=null ? new TaskDto(t.getId(),t.getName(),t.getDesc(),t.getSid(),t.getExecutor(),t.getDeadline()) : null )
+          .collect(Collectors.toList())
+          ;
+        System.out.println(">>>>showDayBeforeDeadline()4:");
+        System.out.println(">>>>showDayBeforeDeadline()4-1:"+ld.size());
+        return ld;
     }
 }

@@ -76,7 +76,9 @@ public class TaskRepository{
 
         t.setName(task.getName());
         t.setDesc(task.getDesc());
-        t.setStatus(task.getStatus());
+        t.setSid(task.getSid());
+        t.setExecutor(task.getExecutor());
+        t.setDeadline(task.getDeadline());
     }
 
     /**
@@ -108,6 +110,20 @@ public class TaskRepository{
         Task t=session.get(Task.class,tid);
         if(t==null) return false;
         t.setExecutor(uid);
+        return true; 
+    }
+
+    /**
+    * Установить дедлайн задачи
+    * @param tid идентификатор задачи
+    * @param dt дедлайн
+    * @return дедлайн назначен успешно (логическое значение)
+    */
+    public boolean setDeadline(int tid,String dt){       System.out.println(">>tr.setDeadline: "+dt);
+        Session session = sessionFactory.getCurrentSession();
+        Task t=session.get(Task.class,tid);
+        if(t==null) return false;
+        t.setDeadline(dt);
         return true; 
     }
 

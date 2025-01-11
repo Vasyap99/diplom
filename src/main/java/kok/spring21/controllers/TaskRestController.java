@@ -73,6 +73,16 @@ public class TaskRestController {
     }
 
     /**
+     * Установить исполнителя задачи
+     * @param tid идентификатор задачи
+     * @param dt дедлайн
+     */
+    @GetMapping("/setDeadline")
+    public boolean setDeadline(@RequestParam("tid") int tid, @RequestParam("dt") String dt) throws Exception {        System.out.println(">>tc.setDeadline: "+dt);
+        return rs.setDeadline(tid,dt);
+    }
+
+    /**
      * Получить список задач по статусу
      * @param sid идентификатор статуса
      */

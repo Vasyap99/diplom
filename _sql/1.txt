@@ -44,3 +44,6 @@ update tasks set deadline='2025-01-10 11:30:30' where id=3;
 update tasks set deadline='2025-01-15 12:00:30' where id=4;
 
 update tasks set deadline='2025-01-08 11:05:00' where id=5;
+
+--
+alter table tasks drop column status;

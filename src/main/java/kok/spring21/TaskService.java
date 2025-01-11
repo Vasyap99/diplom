@@ -76,6 +76,17 @@ public class TaskService {
         return res;				                   //System.out.println(">>sts-E");
     }
     /**
+     * Установить дедлайн задачи
+     * @param tid идентификатор задачи
+     * @param dt дедлайн
+     * @return исполнитель назначен успешно (логическое значение)
+     */
+    @Transactional
+    public boolean setDeadline(int tid,String dt){      System.out.println(">>std-B");       System.out.println(">>ts.setDeadline: "+dt);
+        boolean res=tr.setDeadline(tid,dt);
+        return res;				                   //System.out.println(">>sts-E");
+    }
+    /**
      * Получить список задач по статусу
      * @param sid идентификатор статуса
      */
@@ -103,7 +114,13 @@ public class TaskService {
     public List<TaskDto> showDeadline(String dt){
         List<Task> tl=tr.index();
         if(tl==null) throw new ResponseException(); //return null;   
-        return tl.stream().filter( t -> t.getDeadline().equals(dt) ).map( t -> new TaskDto(t.getId(),t.getName(),t.getDesc(),t.getSid(),t.getExecutor(),t.getDeadline()) ).collect(Collectors.toList());
+        return tl.stream()
+          .filter( t -> {
+              if(t.getDeadline()!=null && dt!=null)
+                  return t.getDeadline().substring(0,10).equals(dt.substring(0,10));
+              else return false;
+          })
+          .map( t -> new TaskDto(t.getId(),t.getName(),t.getDesc(),t.getSid(),t.getExecutor(),t.getDeadline()) ).collect(Collectors.toList());
     }
     /**
      * Получить список задач за сутки до дедлайна

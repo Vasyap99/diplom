@@ -50,11 +50,6 @@ public class Task{
     private String desc;
 
 
-    @Getter
-    @Setter
-    @Column(name="status")
-    private String status; //NEW WORK FIN
-
     /**
      * Идентификатор исполнителя задачи
      */
@@ -78,7 +73,9 @@ public class Task{
     private LocalDateTime deadline; 
 
     public void setDeadline(String dt){
-        deadline=LocalDateTime.parse(dt);
+        try{
+            deadline=LocalDateTime.parse(dt.replace(" ","T"));
+        }catch(Exception e){e.printStackTrace();}
     }
 
     public String getDeadline(){
@@ -89,7 +86,6 @@ public class Task{
     public Task(String name){
         this.id=id;
         this.name=name;
-        status="NEW";  
         executor=null;
         sid=0;     
     }
@@ -98,7 +94,6 @@ public class Task{
         this.id=id;
         this.name=name;  
         this.desc=desk; 
-        status="NEW";  
         executor=null;
         sid=0; 
     }
@@ -111,5 +106,5 @@ public class Task{
         this.sid=sid; 
     }
 
-    public Task(){status="NEW"; executor=null;sid=0;}
+    public Task(){executor=null;sid=0;}
 }

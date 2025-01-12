@@ -98,7 +98,7 @@ public class Task{
         sid=0; 
     }
 
-    public Task(int id,String name,String desk,int sid,int uid){
+    public Task(int id,String name,String desk,Integer sid,Integer uid){
         this.id=id;
         this.name=name;  
         this.desc=desk; 

@@ -3,14 +3,16 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Новый человек</title>
+    <title>Новая задача</title>
 </head>
 
 <body>
 
 
-<form th:method="POST" th:action="@{/people/new}" th:object="${person}">
-    <input type="text" th:field="*{fio}" id="fio">
+<form th:method="POST" th:action="@{/tasks/new}" th:object="${task}">
+    <input type="text" th:field="*{name}" id="name">
+    <br>
+    <input type="text" th:field="*{desc}" id="desc">
     <br>
     <input type="submit" value="create">
 </form>

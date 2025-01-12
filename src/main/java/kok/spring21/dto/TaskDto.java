@@ -29,12 +29,12 @@ public class TaskDto{
     /**
      * Идентификатор статуса
      */
-    private int sid;
+    private Integer sid;
 
     /**
      * Идентификатор исполнителя
      */
-    private int executor;  
+    private Integer executor;  
 
     /**
      * Дедлайн в виде строки в формате: '2025-01-10 11:30:30'
@@ -44,7 +44,7 @@ public class TaskDto{
     /**
      * Конструктор с аргументами
      */
-    public TaskDto(int id,String name,String desc,int sid,int executor,String dt){
+    public TaskDto(int id,String name,String desc,Integer sid,Integer executor,String dt){
         this.id=id;
         this.name=name;  
         this.desc=desc; 

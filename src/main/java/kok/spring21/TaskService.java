@@ -156,4 +156,16 @@ public class TaskService {
         System.out.println(">>>>showDayBeforeDeadline()4-1:"+ld.size());
         return ld;
     }
+
+
+    /**
+     * Получить список всех задач
+     */
+    @Transactional
+    public List<TaskDto> index(){
+        List<Task> tl=tr.index();
+        if(tl==null) throw new ResponseException(); //return null;   
+        return tl.stream()
+          .map( t -> new TaskDto(t.getId(),t.getName(),t.getDesc(),t.getSid(),t.getExecutor(),t.getDeadline()==null ? null : t.getDeadline()) ).collect(Collectors.toList());
+    }
 }

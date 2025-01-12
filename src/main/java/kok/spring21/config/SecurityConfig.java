@@ -153,7 +153,7 @@ class myAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
             HttpServletResponse response,
             Authentication authentication
     ) throws IOException {
-        redirectStrategy.sendRedirect(request, response, "/hello");
+        redirectStrategy.sendRedirect(request, response, "/tasks");
     }
 
 }

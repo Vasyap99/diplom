@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Система управления задачами - Список задач</title>
+</head>
+
+<body>
+
+<div th:text="${kok}"></div>
+
+<div th:text="${kok1}"></div>
+
+<div th:each="task : ${tasks}">
+   <a th:href="@{/tasks/{id}(id=${task.getId()})}" th:text="${task.getName()}"></a> <br>
+   <a th:href="@{/tasks/{id}(id=${task.getId()})}" th:text="${task.getDesc()}"></a> <br>
+   <a th:href="@{/tasks/{id}(id=${task.getId()})}" th:text="${task.getStatus()}"></a> <br>
+   <a th:href="@{/tasks/{id}(id=${task.getId()})}" th:text="${task.getDeadline()}"></a> <br>
+</div>
+
+</body>
+</html>

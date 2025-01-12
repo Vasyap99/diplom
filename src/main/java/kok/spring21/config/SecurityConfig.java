@@ -31,9 +31,6 @@ import org.springframework.context.annotation.*;
 import org.springframework.transaction.annotation.*;
 
 
-import kok.spring21.myLogger;
-
-
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -70,9 +67,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         this.userDetailsService=userDetailsService;
     }
 
-    @Autowired
-    myLogger L;
-
     @Override
     public void configure(AuthenticationManagerBuilder a) throws Exception{
         System.out.println(">>>SC-c()");
@@ -87,9 +81,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception{
-        //L.log("0 configure()");
 
-        //return 
          http//.csrf().disable()
         .authorizeRequests()
           .antMatchers("/api/login","/api/register").permitAll()
@@ -100,13 +92,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .httpBasic()
         .and()
         .formLogin().successHandler(MyAuthenticationSuccessHandler())
-//.and().sessionManagement()
-//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        /*.and().build()*/ ;
+        ;
 
         http.addFilterBefore(jwtRequestFilter(), UsernamePasswordAuthenticationFilter.class);
-
-        //L.log("E configure()");
     }
 
     /*@Bean
@@ -129,8 +117,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new myAuthenticationSuccessHandler();
     }
 
-
-    //
     @Bean
     public JwtRequestFilter jwtRequestFilter() {
         return new JwtRequestFilter(jwtUtil, userDetailsService, tr);

@@ -48,18 +48,26 @@ public class TaskController {
         else return "err";
     }
 
+    /**
+     * Создать новую задачу - обработка GET запроса
+     */
     @GetMapping("/new")
     public String new1(Model model){
         model.addAttribute("task",new Task());
         return "tasks/new";
     }
-
+    /**
+     * Создать новую задачу - обработка POST запроса
+     */
     @PostMapping("/new")
     public String new2(@ModelAttribute("task")Task task){
         ts.createTask(task);
         return "redirect:/tasks/no_user";
     }
 
+    /**
+     * Назначить задачу исполнителю - обработка GET запроса
+     */
     @GetMapping("/appoint/{tid}")
     public String appoint1(@PathVariable("tid")Integer tid, Model model){
         Task t=ts.findById(tid).get();	 System.out.println(">>tc.appoint1(): "+t.getId()+" "+t.getName()+" "+t.getDesc());
@@ -69,10 +77,13 @@ public class TaskController {
         return "tasks/appoint";
     }
 
+    /**
+     * Назначить задачу исполнителю - обработка POST запроса
+     */
     @PostMapping("/appoint")
     public String appoint2(@ModelAttribute("task")Task t, Model model){      System.out.println(">>tc.appoint2(): "+t.getId()+" "+t.getName()+" "+t.getDesc());
-        Integer tid=t.getId();  System.out.println(">>tc.appoint2(): "+tid); 
-        ts.update(tid,t); 
+        //Integer tid=t.getId();  System.out.println(">>tc.appoint2(): "+tid); 
+        ts.update(t); 
         return "redirect:/tasks/no_user";
     }
 

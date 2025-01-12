@@ -55,8 +55,8 @@ public class TaskService {
      * Обновить задачу по id
      */
     @Transactional
-    public void update(int tid,Task t){                System.out.println(">>ut-B");
-        tr.update(tid,t);
+    public void update(Task t){                System.out.println(">>ut-B");
+        tr.update(t);
 				                   System.out.println(">>ut-E");
     }
     /**

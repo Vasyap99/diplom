@@ -76,10 +76,10 @@ public class TaskRepository{
     /**
     * Обновить задачу
     */
-    public void update(int tid,Task task){
+    public void update(Task task){
         Session session = sessionFactory.getCurrentSession();
        
-        Task t=session.get(Task.class,tid);
+        Task t=session.get(Task.class,task.getId());
 
         t.setName(task.getName());
         t.setDesc(task.getDesc());

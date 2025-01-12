@@ -77,10 +77,10 @@ public class TaskRepository{
     * Обновить задачу
     * @param id идентификатор задачи
     */
-    public void update(Task task,int id){
+    public void update(int tid,Task task){
         Session session = sessionFactory.getCurrentSession();
        
-        Task t=session.get(Task.class,id);
+        Task t=session.get(Task.class,tid);
 
         t.setName(task.getName());
         t.setDesc(task.getDesc());
@@ -139,10 +139,10 @@ public class TaskRepository{
     * Получить задачу по идентификатору
     * @param id идентификатор задачи
     */
-    public Task get(int id){
+    public Optional<Task> get(int id){
         Session session=sessionFactory.getCurrentSession();
         Task t=session.get(Task.class,id);
-        return t; 
+        return Optional.ofNullable(t); 
     }
 
     /**
@@ -151,7 +151,7 @@ public class TaskRepository{
     */
     public void delete(int id){
         Session session = sessionFactory.getCurrentSession();
-        Task task=get(id);
+        Task task=get(id).get();
         session.delete(task);
     }
 }

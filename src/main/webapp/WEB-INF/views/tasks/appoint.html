@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Назначение задачи</title>
+</head>
+
+<body>
+
+
+<form th:method="POST" th:action="@{/tasks/appoint}" th:object="${task}">
+    Введите дедлайн:<br>
+    <input type="text" th:field="*{deadline}" id="dt">
+    <br>
+    Введите id пользователя:<br>
+    <input type="text" th:field="*{executor}" id="executor">
+    <br>
+    <input type="text" th:field="*{name}" id="name">
+    <br>
+    <input type="text" th:field="*{desc}" id="desc">
+    <br>
+    <input type="text" th:field="*{id}" id="id">
+    <br>
+    <input type="text" th:field="*{sid}" id="sid">
+    <br>
+    <input type="submit" value="назначить">
+</form>
+
+</body>
+</html>

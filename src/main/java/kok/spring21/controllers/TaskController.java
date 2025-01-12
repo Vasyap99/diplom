@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import kok.spring21.models.Task;
+import kok.spring21.dto.TaskDto;
 
 import org.springframework.web.bind.annotation.*;
 
@@ -56,6 +57,22 @@ public class TaskController {
     @PostMapping("/new")
     public String new2(@ModelAttribute("task")Task task){
         ts.createTask(task);
+        return "redirect:/tasks/no_user";
+    }
+
+    @GetMapping("/appoint/{tid}")
+    public String appoint1(@PathVariable("tid")Integer tid, Model model){
+        Task t=ts.findById(tid).get();	 System.out.println(">>tc.appoint1(): "+t.getId()+" "+t.getName()+" "+t.getDesc());
+        //TaskDto t1;
+        model.addAttribute("task",t);
+        //model.addAttribute("tid",tid);
+        return "tasks/appoint";
+    }
+
+    @PostMapping("/appoint")
+    public String appoint2(@ModelAttribute("task")Task t, Model model){      System.out.println(">>tc.appoint2(): "+t.getId()+" "+t.getName()+" "+t.getDesc());
+        Integer tid=t.getId();  System.out.println(">>tc.appoint2(): "+tid); 
+        ts.update(tid,t); 
         return "redirect:/tasks/no_user";
     }
 

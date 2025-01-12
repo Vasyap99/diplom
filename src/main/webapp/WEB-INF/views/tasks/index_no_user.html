@@ -61,8 +61,13 @@
       if(v1=="2") {v0.innerHTML="FINISHED";v2.value="2";}
    </script>
 
-   <div class="myform" th:href="@{/tasks/{id}(id=${task.getId()})}" th:text="${task.getDt()}"></div> <br>
-   <br>
+   <div class="myform" th:href="@{/tasks/{id}(id=${task.getId()})}" th:text="${task.getDt()}"></div> 
+
+   <form th:method="GET" th:action="@{/tasks/appoint/{id}(id=${task.getId()})}">
+    <input type="submit" value="назначить" class=""/>
+   </form>
+
+   <br><br>
 </div>
 
 </body>

@@ -44,6 +44,22 @@ public class TaskService {
 				                   System.out.println(">>ct-E");
     }
     /**
+     * Найти задачу по id
+     */
+    @Transactional
+    public Optional<Task> findById(int tid){                System.out.println(">>ft-B");
+        return tr.get(tid);
+				                   //System.out.println(">>ft-E");
+    }
+    /**
+     * Обновить задачу по id
+     */
+    @Transactional
+    public void update(int tid,Task t){                System.out.println(">>ut-B");
+        tr.update(tid,t);
+				                   System.out.println(">>ut-E");
+    }
+    /**
      * Установить статус задачи
      * @param tid идентификатор задачи
      * @param sid идентификатор статуса

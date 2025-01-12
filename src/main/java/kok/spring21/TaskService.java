@@ -1,11 +1,13 @@
 package kok.spring21;
 
-import kok.spring21.repo.TaskRepository;
+import kok.spring21.repo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kok.spring21.models.User;
 import kok.spring21.models.Task;
 import kok.spring21.dto.TaskDto;
+import java.util.Optional;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,6 +32,9 @@ import java.nio.charset.StandardCharsets;
 public class TaskService {
     @Autowired
     TaskRepository tr;
+
+    @Autowired
+    UserRepository ur;
     /**
      * Создать задачу
      */
@@ -107,6 +112,14 @@ public class TaskService {
         return tl.stream().map( t -> new TaskDto(t.getId(),t.getName(),t.getDesc(),t.getSid(),t.getExecutor(),t.getDeadline()) ).collect(Collectors.toList());
     }
     /**
+     * Получить список задач без исполнителя
+     */
+    @Transactional
+    public List<TaskDto> showNoExecutor(){
+        List<Task> tl=tr.show_no_user();
+        return tl.stream().map( t -> new TaskDto(t.getId(),t.getName(),t.getDesc(),t.getSid(),t.getExecutor(),t.getDeadline()) ).collect(Collectors.toList());
+    }
+    /**
      * Получить список задач по дедлайну
      * @param dt дедлайн в формате строки (пример: '2025-01-10 11:30:30')
      */
@@ -162,8 +175,13 @@ public class TaskService {
      * Получить список всех задач
      */
     @Transactional
-    public List<TaskDto> index(){
-        List<Task> tl=tr.index();
+    public List<TaskDto> index(String name){
+        Optional<User> ou=ur.findByName(name);
+        List<Task> tl;
+        if(ou.isPresent()) 
+            tl=tr.show_user(ou.get().getI());
+        else
+            tl=tr.index();
         if(tl==null) throw new ResponseException(); //return null;   
         return tl.stream()
           .map( t -> new TaskDto(t.getId(),t.getName(),t.getDesc(),t.getSid(),t.getExecutor(),t.getDeadline()==null ? null : t.getDeadline()) ).collect(Collectors.toList());

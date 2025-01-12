@@ -34,6 +34,14 @@ public class TaskRepository{
     }
 
     /**
+    * Получить список задач, не назначенных пользователям
+    */
+    public List<Task> show_no_user(){
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("from Task where uid is null",Task.class) .getResultList();
+    }
+
+    /**
     * Получить список задач, назначенных пользователю
     * @param uid идентификатор исполнителя
     * @return список задач или null, если нет такого исполнителя

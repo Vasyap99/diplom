@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Система управления задачами - Список задач</title>
+    <title>Система управления задачами - Не назначенные задачи</title>
     <style>
         .myform{
                     text-align:left;
@@ -23,16 +23,9 @@
 
 <body>
 
-<form th:method="GET" th:action="@{/tasks/new}">
-    <input type="submit" value="Создать новую задачу" class=""/>
-</form>
+<h1>Список не назначенных задач</h1>
 
 <br>
-
-
-<div th:text="${kok}"></div>
-
-<div th:text="${kok1}"></div>
 
 <div th:each="task : ${tasks}">
    <div class="myform" th:href="@{/tasks/{id}(id=${task.getId()})}" th:text="${task.getName()}" style="width: 15%;"></div> 

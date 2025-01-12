@@ -18,6 +18,8 @@ import kok.spring21.models.Task;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+
 
 @Controller
 @RequestMapping("/tasks")
@@ -26,11 +28,17 @@ public class TaskController {
     TaskService ts;
 
     @GetMapping()
-    public String index(Model model){
-        model.addAttribute("tasks",ts.index());
+    public String index(Principal principal, Model model){
+        String name=principal.getName();
+        model.addAttribute("tasks",ts.index(name));
         return "tasks/index";
     }
 
+    @GetMapping("/no_user")
+    public String index_no_user(Model model){
+        model.addAttribute("tasks",ts.showNoExecutor());
+        return "tasks/index_no_user";
+    }
     
     @GetMapping("/setStatus")
     @ResponseBody
@@ -48,7 +56,7 @@ public class TaskController {
     @PostMapping("/new")
     public String new2(@ModelAttribute("task")Task task){
         ts.createTask(task);
-        return "redirect:/tasks";
+        return "redirect:/tasks/no_user";
     }
 
     /*

@@ -75,7 +75,6 @@ public class TaskRepository{
 
     /**
     * Обновить задачу
-    * @param id идентификатор задачи
     */
     public void update(int tid,Task task){
         Session session = sessionFactory.getCurrentSession();

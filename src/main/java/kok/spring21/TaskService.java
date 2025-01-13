@@ -69,6 +69,24 @@ public class TaskService {
     public boolean setStatus(int tid,int sid){  System.out.println(">>sts-B");
         return tr.setTaskStatus(tid,sid);  
     }
+
+    void send_msg(int uid){
+	try{			                   //System.out.println(">>sts-E");
+            String QUEUE="TASK_USER_QUEUE_"+uid;
+            ConnectionFactory factory = new ConnectionFactory();
+            factory.setHost("localhost");
+            try (Connection connection = factory.newConnection();
+                Channel channel = connection.createChannel()) {
+                channel.queueDeclare(QUEUE, false, false, false, null);
+                String message = "Вам назначена новая задача в системе управления задачами!";
+                channel.basicPublish("", QUEUE, null, message.getBytes(StandardCharsets.UTF_8));
+                System.out.println(" [x] Sent '" + message + "'");
+            }
+        }catch(Exception e){
+            System.out.println(">>RabbitMQ error!!!");
+        }
+    }
+
     /**
      * Установить исполнителя задачи
      * @param tid идентификатор задачи

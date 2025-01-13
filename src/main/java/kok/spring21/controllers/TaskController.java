@@ -84,6 +84,7 @@ public class TaskController {
     public String appoint2(@ModelAttribute("task")Task t, Model model){      System.out.println(">>tc.appoint2(): "+t.getId()+" "+t.getName()+" "+t.getDesc());
         //Integer tid=t.getId();  System.out.println(">>tc.appoint2(): "+tid); 
         ts.update(t); 
+        ts.send_msg(t.getId()); 
         return "redirect:/tasks/no_user";
     }
 
